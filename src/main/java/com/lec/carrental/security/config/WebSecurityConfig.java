@@ -4,6 +4,7 @@ import com.lec.carrental.security.UserDetailsServiceImpl;
 import com.lec.carrental.security.jwt.AuthEntryPointJwt;
 import com.lec.carrental.security.jwt.AuthTokenFilter;
 import lombok.AllArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -38,6 +39,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         return new BCryptPasswordEncoder();
     }
 
+    @Bean
     @Override
     public AuthenticationManager authenticationManagerBean() throws Exception {
         return super.authenticationManagerBean();
@@ -52,9 +54,13 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity http) throws Exception {
         http.csrf().and().cors().disable().exceptionHandling().authenticationEntryPoint(authEntryPointJwt)
                 .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                .and().authorizeRequests().antMatchers("/carrental/api/user/**")
+                .and().authorizeRequests().antMatchers("/car-rental/api/user/**")
                 .permitAll()
                 .anyRequest().authenticated();
+
+        http.csrf().and().cors().disable().exceptionHandling().authenticationEntryPoint(authEntryPointJwt)
+                .and().sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+                .and().antMatcher("/car-rental/api/register").antMatcher("/car-rental/api/login");
 
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
     }
