@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.util.Set;
 
-@AllArgsConstructor
 @NoArgsConstructor
 @Getter
 @Setter
@@ -59,12 +58,12 @@ public class Car {
     @Column(nullable = false, length = 30)
     private String fuelType;
 
-    private Boolean builtIn;
+    private Boolean builtIn = false;
 
     @ManyToMany(fetch = FetchType.LAZY)
     @JoinTable(name = "car_image",
-    joinColumns = @JoinColumn(name = "car_id"),
-    inverseJoinColumns = @JoinColumn(name = "file_id"))
+            joinColumns = @JoinColumn(name = "car_id"),
+            inverseJoinColumns = @JoinColumn(name = "file_id"))
     private Set<FileDB> image;
 
 }
