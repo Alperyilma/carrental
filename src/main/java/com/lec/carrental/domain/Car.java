@@ -47,7 +47,7 @@ public class Car {
 
     @NotNull(message = "Please enter the car age")
     @Column(nullable = false)
-    private Boolean age;
+    private Integer age;
 
     @NotNull(message = "Please enter the price hour of the car")
     @Column(nullable = false)
